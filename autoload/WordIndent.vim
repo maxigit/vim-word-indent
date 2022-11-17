@@ -74,6 +74,11 @@ export def FindTabStopsR(lnum: string, offset: number): list<number>
     stops = lefts + stops
     left = stops->get(0, left)
   endwhile
+  # remove 1
+  const i1 = stops->index(1)
+  if i1 > -1
+    stops->remove(i1)
+  endif
   return stops
 enddef
 
@@ -140,5 +145,52 @@ def StrToNrs(str: string): list<number>
 enddef
 
 
+export def AddCc()
+  var cols = &colorcolumn->StrToNrs()
+  const col = getcurpos()[2]
+  const i = cols->index(col)
+  if i == -1
+    cols->add(col)
+  else
+    cols->remove(i)
+  endif
+  SetCcs(cols)
+enddef
+
+export def SetCc()
+  const col = getcurpos()[2]
+  SetCcs([col])
+enddef
+
+def SetCcs(cols: list<number>)
+  &colorcolumn = cols->sort('N')->join(',')
+  if get(g:, 'word_indent_auto_vsts', 1) != 0
+    &varsofttabstop = cols->ColsToTabStops()->join(',')
+  endif
+enddef
+
+
+# use first colorcolumn or varsofttabs as indent if present
+export def Indent(): number
+  const cols = &colorcolumn->StrToNrs()
+  if len(cols) > 0
+    return cols[0] - 1
+  endif
+
+  const colvs = &varsofttabstop->StrToNrs()->TabStopsToCols()
+  if len(colvs) > 0
+    return colvs[0] - 1
+  endif
+
+  return 0
+enddef
+
+export def ToggleIndent()
+  if &indentexpr == "indentexpr=WordIndent#Indent()"
+    :set indentexpr=
+  else
+    :set indentexpr=WordIndent#Indent()
+  endif
+enddef
 
 defcompile
