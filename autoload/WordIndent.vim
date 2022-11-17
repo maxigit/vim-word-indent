@@ -4,7 +4,7 @@ const pairs = {'(': ')', '[': ']', '{': '}', '''': '''', '"': '"'}
 
 # find tab stop for a given line
 # breaking words 
-export def FindTabStops(str: string): list<number>
+export def FindWordStops(str: string): list<number>
   var stops = []
   var was_blank = true
   const l = strlen(str)
@@ -64,11 +64,11 @@ enddef
 #     
 export def FindTabStopsR(lnum: string, offset: number): list<number>
   var l: number = line(lnum) + offset
-  var stops = FindTabStops(getline(l))
+  var stops = FindWordStops(getline(l))
   var left = stops->get(0, 1000)
   while (left > 1 && l > 0)
     l = l - 1
-    const new_stops = FindTabStops(getline(l))
+    const new_stops = FindWordStops(getline(l))
     const first_bad = new_stops->indexof((i, v) => v >= left)
     const lefts = new_stops->slice(0, first_bad)
     stops = lefts + stops
@@ -77,7 +77,7 @@ export def FindTabStopsR(lnum: string, offset: number): list<number>
   return stops
 enddef
 
-export def SetTabStops(lnum: string, offset: number = 0): any
+export def SetWordStops(lnum: string, offset: number = 0): any
   const stops: list<number> = FindTabStopsR(lnum, offset)
   var diffs: list<number> = []
   var last = 1
@@ -124,6 +124,21 @@ export def TabStopsToCols(stops: list<number>): list<number>
   endfor
   return cols
 enddef
+
+# set colorculum
+export def SetCcFromVsts()
+  &colorcolumn = &varsofttabstop->StrToNrs()->TabStopsToCols()->join(',')
+enddef
+
+# varsofttabstop
+export def SetVstsFromCc()
+  &varsofttabstop = &colorcolumn->StrToNrs()->ColsToTabStops()->join(',')
+enddef
+
+def StrToNrs(str: string): list<number>
+  return str->split(',')->map((key, val) => str2nr(val))
+enddef
+
 
 
 defcompile
