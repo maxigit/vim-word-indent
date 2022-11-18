@@ -1,6 +1,6 @@
 vim9script
 
-const pairs = {'(': ')', '[': ']', '{': '}', '''': '''', '"': '"'}
+const default_pairs = {'(': ')', '[': ']', '{': '}', '''': '''', '"': '"'}
 
 # find tab stop for a given line
 # breaking words 
@@ -9,7 +9,7 @@ export def FindWordStops(str: string): list<number>
   var was_blank = true
   const l = strlen(str)
   var pos = 0
-
+  const pairs = get(b:, 'word_indent_pairs', default_pairs)
   while (pos < l)
     const c = str[pos]
     pos += 1

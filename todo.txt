@@ -1,0 +1,11 @@
+ [ ] indent get previous line indent nearest stop
+ [ ] S-Tab go backward (like C-D ???)
+ [ ] BUG: autcomd misses last word
+ [ ] other indent, min, max round ?
+ [ ] ww -> not recursive
+ [ ] wW -> recursive
+ [ ] wc-> to clear 
+ [ ] set shiftwidth according to cursor positions and stops
+ [ ] implement mapping iC-T  iC-tD > and < " "
+ [ ] variables for behaviors
+ - [ ] displays or not cc when auto
