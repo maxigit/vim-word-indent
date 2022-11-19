@@ -93,6 +93,12 @@ export def SetWordStops(lnum: string, offset: number = 0): any
     last = stop
   endfor
   &vartabstop = diffs->join(',')
+  &colorcolumn = stops->join(',')
+  return stops
+enddef
+
+# 1,4,6,9 => xxxx..xxx
+def StopsToZebra(stops: list<number>): list<number>
   var cols = []
   var start =  0
   for stop in stops
@@ -103,9 +109,7 @@ export def SetWordStops(lnum: string, offset: number = 0): any
       start = stop
     endif
   endfor
-  &colorcolumn = cols->join(',')
-  &colorcolumn = stops->join(',')
-  return stops
+  return cols
 enddef
 
 export def ColsToTabStops(cols: list<number>): list<number>
