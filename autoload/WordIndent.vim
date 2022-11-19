@@ -174,18 +174,21 @@ def SetCcs(cols: list<number>)
 enddef
 
 
-# use first colorcolumn or varsofttabs as indent if present
-export def Indent(): number
+# get stops from &colorcolumn or &varsoftabs
+export def GetStops(): list<number>
   const cols = &colorcolumn->StrToNrs()
   if len(cols) > 0
-    return cols[0] - 1
+    return cols
   endif
+  return &varsofttabstop->StrToNrs()->TabStopsToCols()
+enddef
 
-  const colvs = &varsofttabstop->StrToNrs()->TabStopsToCols()
-  if len(colvs) > 0
-    return colvs[0] - 1
+# use first colorcolumn or varsofttabs as indent if present
+export def Indent(): number
+  const stops = GetStops()
+  if len(stops) > 0
+    return stops[-1] - 1
   endif
-
   return 0
 enddef
 
@@ -195,6 +198,17 @@ export def ToggleIndent()
   else
     :set indentexpr=WordIndent#Indent()
   endif
+enddef
+
+
+# Find first stops >= given position
+export def FindNextStops(stops: list<number>, pos: number): number
+  for stop in stops
+    if stop >= pos
+      return stop
+    endif
+  endfor
+  return 0
 enddef
 
 defcompile
