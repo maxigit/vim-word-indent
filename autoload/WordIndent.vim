@@ -1,6 +1,6 @@
-vim9script
+  vim9script
 
-const default_pairs = {'(': ')', '[': ']', '{': '}', '''': '''', '"': '"'}
+  const default_pairs = {'(': ')', '[': ']', '{': '}', '''': '''', '"': '"'}
 
 # find tab stop for a given line
 # breaking words 
@@ -229,12 +229,72 @@ enddef
 
 # Find first stops >= given position
 export def FindNextStops(stops: list<number>, pos: number): number
-  for stop in stops
-    if stop >= pos
-      return stop
-    endif
-  endfor
+  const i = stops->indexof('v:val >= ' .. pos)
+  if i > -1
+    return stops[i]
+  endif
   return 0
+enddef
+
+export def FindPreviousStops(stops: list<number>, pos: number): number
+  const i = stops->indexof('v:val >= ' .. pos)
+  if i == -1
+    return stops[-1]
+  elseif i > 0
+    return stops[i - 1 ]
+  endif
+  return 0
+enddef
+
+# set sw so that the next shift will align the first character to with the
+# next/previous tab and execute the action
+export def WithShift(dir: string, cmd: string)
+  const stops = GetStops()
+  if stops == []
+     execute cmd
+  endif
+
+  const col = max([indent('.') + 1, 1])
+  const old_shiftwidth = &shiftwidth
+
+  const sw = dir == 'left' ? col - stops->FindPreviousStops(col)
+                           : stops->FindNextStops(col + 1) - col
+  if sw > 0
+    &shiftwidth = sw
+    execute cmd
+    &shiftwidth = old_shiftwidth
+  endif
+enddef
+
+  
+export def SetShiftWidth(dir: string, use_pos: bool)
+  b:word_indent_old_indentexpr = &indentexpr
+  var stops = GetStops()
+  if stops == []
+    const vcol = getcurpos()[4]
+    const  tab = vcol / &shiftwidth * &shiftwidth
+    stops = [ tab - &sw, tab, tab + &sw ]
+  endif
+
+  const col = max([indent('.') + 1, 0])
+  # if a line is empty use the virtual column position instead
+  # to avoid going backward.
+  const vcol: number = use_pos && getline('.') == '' ?  getcurpos()[4]
+                                                    : col
+  const sw = dir == 'left' ? stops->FindPreviousStops(vcol)  - col
+                           : (stops->FindNextStops(vcol + 1) ?? (vcol + &sw)) - col
+  b:word_indent_indent_shift = sw
+  &indentexpr = "indent(v:lnum)+" .. string(sw)
+  &indentexpr = "WordIndent#IndentShift()"
+enddef
+
+
+export def RestoreShiftWidth()
+  &indentexpr = b:word_indent_old_indentexpr
+enddef
+
+export def IndentShift(): number
+  return max([indent(v:lnum) + b:word_indent_indent_shift, 0])
 enddef
 
 defcompile

@@ -3,8 +3,17 @@ execute "nnoremap <silent> ".leader."w :<C-U>call WordIndent#SetWordStops('.', -
 execute "nnoremap <silent> ".leader."k :<C-U>call WordIndent#SetWordStops('.', -v:count1)<CR>"
 execute "nnoremap <silent> ".leader."j :<C-U>call WordIndent#SetWordStops('.', +v:count1)<CR>"
 execute "nnoremap <silent> ".leader."W :<C-U>set varsofttabstop= colorcolumn=<CR>"
-inoremap <silent> <S-Tab> <C-o>:<C-U>call WordIndent#SetWordStops('.', -1)<CR>
-" inoremap <silent> <Cr> <C-o>:<C-U>call WordIndent#SetWordStops('.', )<CR><Cr>
+inoremap <silent> <S-Tab> <C-o>:<C-U>call WordIndent#SetWordStops('.', -1)<CR> <C-F>
+inoremap <C-D> <C-O>:call WordIndent#SetShiftWidth('left', 1)<Cr>
+               \<C-F>
+               \<C-\><C-O>:call WordIndent#RestoreShiftWidth()<Cr>
+inoremap <C-T> <C-O>:call WordIndent#SetShiftWidth('right', 1)<Cr>
+               \<C-F>
+               \<C-\><C-O>:call WordIndent#RestoreShiftWidth()<Cr>
+noremap >> :call WordIndent#WithShift('right', "normal! >>")<Cr>
+noremap << :call WordIndent#WithShift('left', "normal! <<")<Cr>
+noremap >) :call WordIndent#WithShift('right', "normal! >)")<Cr>
+noremap <) :call WordIndent#WithShift('left', "normal! <)")<Cr>
 
 execute "nnoremap <silent> ".leader."c :<C-U>call WordIndent#SetCcFromVsts()<CR>"
 execute "nnoremap <silent> ".leader."v :<C-U>call WordIndent#SetVstsFromCc()<CR>"
