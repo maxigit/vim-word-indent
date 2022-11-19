@@ -51,6 +51,13 @@ export def FindWordStops(str: string): list<number>
   return stops
 enddef
 
+def Line(lnum: string, offset: number): number
+  if lnum == ''
+    return offset
+  endif
+  return line(lnum) + offset
+enddef
+
 # Find words from given line (and recursively
 # line above if a line is indented
 # Ex
@@ -63,7 +70,7 @@ enddef
 #   A1 A2 B1 C1 C2
 #     
 export def FindTabStopsR(lnum: string, offset: number): list<number>
-  var l: number = line(lnum) + offset
+  var l: number = Line(lnum, offset)
   var stops = FindWordStops(getline(l))
   var left = stops->get(0, 1000)
   while (left > 1 && l > 0)
@@ -183,13 +190,32 @@ export def GetStops(): list<number>
   return &varsofttabstop->StrToNrs()->TabStopsToCols()
 enddef
 
-# use first colorcolumn or varsofttabs as indent if present
+# use last stops unless
+# the line is already matching a stop
 export def Indent(): number
-  const stops = GetStops()
-  if len(stops) > 0
-    return stops[-1] - 1
+  # 0 indent if previous line empty
+  if getline(v:lnum - 1) == ""
+    return 0
   endif
-  return 0
+  var stops = GetStops()
+  if len(stops) == 0
+    stops = FindTabStopsR('', v:lnum - 1)
+  endif
+
+  if len(stops) == 0
+    stops = [1]
+  endif
+
+  const current_indent: number = indent(v:lnum) + 1
+  const current_stop: number = stops->FindNextStops(current_indent)
+
+  if current_stop == current_indent
+    # at a stop, don't change it
+    return current_stop - 1
+  elseif current_stop > 0
+    return current_stop - 1
+  endif 
+  return stops[-1] - 1
 enddef
 
 export def ToggleIndent()
