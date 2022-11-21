@@ -23,10 +23,11 @@ execute "nnoremap <silent> ".leader."i :<C-U>call WordIndent#ToggleIndent()<CR>"
 
 set indentexpr=WordIndent#ToggleIndent()
 
-if 0
-" autocmd InsertEnter  * call WordIndent#SetWordStops('.')
-autocmd InsertEnter  * call SetWordStopsIf()
-autocmd InsertLeave  * call UnsetWordStops()
+if  get(g:, 'word_indent_auto_stops', get(b:, 'word_indent_auto_stops', 1))
+ augroup word_indent
+ autocmd InsertEnter  * call SetWordStopsIf()
+ autocmd InsertLeave  * call UnsetWordStops()
+ augroup END            
 endif
 
 function SetWordStopsIf()
