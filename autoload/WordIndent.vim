@@ -297,4 +297,27 @@ export def IndentShift(): number
   return max([indent(v:lnum) + b:word_indent_indent_shift, 0])
 enddef
 
+export def ShiftLeft(type=''): string
+  if type == ""
+    &operatorfunc = ShiftLeft
+    return "g@"
+  endif
+  normal! '[
+  SetShiftWidth('left', v:false)
+  normal! =']
+  RestoreShiftWidth()
+  return ""
+enddef
+export def ShiftRight(type=''): string
+  if type == ""
+    &operatorfunc = ShiftRight
+    return "g@"
+  endif
+  normal! '[
+  SetShiftWidth('right', v:false)
+  normal! =']
+  RestoreShiftWidth()
+  return ""
+enddef
+
 defcompile

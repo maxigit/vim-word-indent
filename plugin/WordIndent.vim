@@ -10,10 +10,10 @@ inoremap <C-D> <C-O>:call WordIndent#SetShiftWidth('left', 1)<Cr>
 inoremap <C-T> <C-O>:call WordIndent#SetShiftWidth('right', 1)<Cr>
                \<C-F>
                \<C-\><C-O>:call WordIndent#RestoreShiftWidth()<Cr>
-noremap >> :call WordIndent#WithShift('right', "normal! >>")<Cr>
-noremap << :call WordIndent#WithShift('left', "normal! <<")<Cr>
-noremap >) :call WordIndent#WithShift('right', "normal! >)")<Cr>
-noremap <) :call WordIndent#WithShift('left', "normal! <)")<Cr>
+noremap <expr> < WordIndent#ShiftLeft()
+noremap <expr> > WordIndent#ShiftRight()
+" map >> >>
+" map << <<
 
 execute "nnoremap <silent> ".leader."c :<C-U>call WordIndent#SetCcFromVsts()<CR>"
 execute "nnoremap <silent> ".leader."v :<C-U>call WordIndent#SetVstsFromCc()<CR>"
