@@ -4,6 +4,7 @@ execute "nnoremap <silent> ".leader."k :<C-U>call WordIndent#SetWordStops('.', -
 execute "nnoremap <silent> ".leader."j :<C-U>call WordIndent#SetWordStops('.', +v:count1)<CR>"
 execute "nnoremap <silent> ".leader."W :<C-U>set varsofttabstop= colorcolumn=<CR>"
 inoremap <expr> <S-Tab> WordIndent#ToggleWordStops() ?? "<Tab>"
+inoremap <expr> <C-G><C-G> WordIndent#ToggleWordStops() ?? ""
 inoremap <expr> <C-D> WordIndent#SetShiftWidth('left', 1) ??  "<C-F>"
 inoremap <expr> <C-T> WordIndent#SetShiftWidth('right', 1) ?? "<C-F>"
 noremap <expr> < WordIndent#ShiftLeft()
