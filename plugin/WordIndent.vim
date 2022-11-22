@@ -4,12 +4,8 @@ execute "nnoremap <silent> ".leader."k :<C-U>call WordIndent#SetWordStops('.', -
 execute "nnoremap <silent> ".leader."j :<C-U>call WordIndent#SetWordStops('.', +v:count1)<CR>"
 execute "nnoremap <silent> ".leader."W :<C-U>set varsofttabstop= colorcolumn=<CR>"
 inoremap <expr> <S-Tab> WordIndent#ToggleWordStops() ?? "<Tab>"
-inoremap <C-D> <C-O>:call WordIndent#SetShiftWidth('left', 1)<Cr>
-               \<C-F>
-               \<C-\><C-O>:call WordIndent#RestoreShiftWidth()<Cr>
-inoremap <C-T> <C-O>:call WordIndent#SetShiftWidth('right', 1)<Cr>
-               \<C-F>
-               \<C-\><C-O>:call WordIndent#RestoreShiftWidth()<Cr>
+inoremap <expr> <C-D> WordIndent#SetShiftWidth('left', 1) ??  "<C-F>"
+inoremap <expr> <C-T> WordIndent#SetShiftWidth('right', 1) ?? "<C-F>"
 noremap <expr> < WordIndent#ShiftLeft()
 noremap <expr> > WordIndent#ShiftRight()
 
@@ -24,3 +20,8 @@ set indentexpr=WordIndent#ToggleIndent()
 
 call WordIndent#InstallAuto(1)
 
+set rulerformat=#%{undotree().seq_cur}
+
+augroup word_indent_shift
+  autocmd InsertLeave * call WordIndent#RestoreShiftWidth()
+augroup END

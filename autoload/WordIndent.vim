@@ -259,7 +259,12 @@ enddef
 
   
 export def SetShiftWidth(dir: string, use_pos: bool)
-  b:word_indent_old_indentexpr = &indentexpr
+  # save indentexpr but prevent
+  # nested call to override the first old_expression
+  if get(b:, 'word_indent_to_restore', 0) == 0
+    b:word_indent_old_indentexpr = &indentexpr
+    b:word_indent_to_restore = 1
+  endif
   var stops = GetStops()
   if stops == []
     const vcol = getcurpos()[4]
@@ -281,7 +286,8 @@ enddef
 
 
 export def RestoreShiftWidth()
-  &indentexpr = b:word_indent_old_indentexpr
+  &indentexpr = get(b:, 'word_indent_old_indentexpr', '')
+  b:word_indent_to_restore = 0
 enddef
 
 export def IndentShift(): number
