@@ -77,7 +77,7 @@ export def FindTabStopsR(lnum: string, offset: number): list<number>
     l = l - 1
     const new_stops = FindWordStops(getline(l))
     const first_bad = new_stops->indexof((i, v) => v >= left)
-    const lefts = new_stops->slice(0, first_bad)
+    const lefts = first_bad == -1 ? new_stops : new_stops->slice(0, first_bad)
     stops = lefts + stops
     left = stops->get(0, left)
   endwhile
@@ -91,16 +91,7 @@ enddef
 
 export def SetWordStops(lnum: string, offset: number = 0): any
   const stops: list<number> = FindTabStopsR(lnum, offset)
-  var diffs: list<number> = []
-  var last = 1
-  for stop in stops
-    if stop != last 
-      diffs->add(stop - last)
-    endif
-    last = stop
-  endfor
-  &vartabstop = diffs->join(',')
-  &colorcolumn = stops->join(',')
+  SetCcs(stops)
   return stops
 enddef
 
@@ -320,10 +311,10 @@ export def ShiftRight(type=''): string
   return ""
 enddef
 
-export def SetWordStopsIf()
+export def SetWordStopsIf(offset=0)
 	if &varsofttabstop == ''
       b:word_indent_set_ = 1
-		call WordIndent#SetWordStops('.')
+      call WordIndent#SetWordStops('.', offset)
   endif
 enddef
 
@@ -356,7 +347,7 @@ export def InstallAuto(install: bool=true)
   augroup word_indent
   au!
   if  install
-    autocmd InsertEnter  * call WordIndent#SetWordStopsIf()
+    autocmd InsertEnter  * call WordIndent#SetWordStopsIf(-1)
     autocmd InsertLeave  * call WordIndent#UnsetWordStops()
   else
   endif
