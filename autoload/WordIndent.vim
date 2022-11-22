@@ -268,7 +268,7 @@ export def SetShiftWidth(dir: string, use_pos: bool)
   var stops = GetStops()
   if stops == []
     const vcol = getcurpos()[4]
-    const  tab = vcol / &shiftwidth * &shiftwidth
+    const  tab = vcol / &shiftwidth * &shiftwidth + 1
     stops = [ tab - &sw, tab, tab + &sw ]
   endif
 
