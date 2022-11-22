@@ -165,7 +165,9 @@ export def SetCc()
 enddef
 
 def SetCcs(cols: list<number>)
-  &colorcolumn = cols->copy()->sort('N')->join(',')
+  if get(g:, 'word_indent_auto_cc', 1) != 0
+    &colorcolumn = cols->copy()->sort('N')->join(',')
+  endif
   if get(g:, 'word_indent_auto_vsts', 1) != 0
     &varsofttabstop = cols->ColsToTabStops()->join(',')
   endif

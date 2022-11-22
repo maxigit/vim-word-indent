@@ -15,6 +15,7 @@ execute "nnoremap <silent> ".leader."a :<C-U>call WordIndent#AddCc()<CR>"
 execute "nnoremap <silent> ".leader."s :<C-U>call WordIndent#SetCc()<CR>"
 execute "nnoremap <silent> ".leader."i :<C-U>call WordIndent#ToggleIndent()<CR>"
 execute "nnoremap <silent> ".leader."I :<C-U>call WordIndent#ToggleAuto()<CR>"
+execute "nnoremap <silent> ".leader."C :<C-U>let g:word_indent_auto_cc=1-get(g:, 'word_indent_auto_cc', 1)<Cr>"
 
 set indentexpr=WordIndent#ToggleIndent()
 
