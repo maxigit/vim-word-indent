@@ -72,6 +72,10 @@ enddef
 export def FindTabStopsR(lnum: string, offset: number): list<number>
   var l: number = Line(lnum, offset)
   var stops = FindWordStops(getline(l))
+  if (stops == [] || (&sw > 0 && stops[0] > &shiftwidth))
+     && get(g:, 'word_indent_start_with_sw', get(b:, 'word_indent_use_with_sw', 1))
+      stops->insert(&shiftwidth + 1)
+  endif
   var left = stops->get(0, 1000)
   while (left > 1 && l > 0)
     l = l - 1
