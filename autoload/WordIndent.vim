@@ -174,7 +174,7 @@ export def SetCc()
 enddef
 
 def SetCcs(cols: list<number>)
-  &colorcolumn = cols->sort('N')->join(',')
+  &colorcolumn = cols->copy()->sort('N')->join(',')
   if get(g:, 'word_indent_auto_vsts', 1) != 0
     &varsofttabstop = cols->ColsToTabStops()->join(',')
   endif
@@ -320,4 +320,34 @@ export def ShiftRight(type=''): string
   return ""
 enddef
 
+export def SetWordStopsIf()
+	if &varsofttabstop == ''
+      b:word_indent_set_ = 1
+		call WordIndent#SetWordStops('.')
+  endif
+enddef
+
+export def UnsetWordStops()
+  if get(b:, 'word_indent_set_') == 1
+    set varsofttabstop= colorcolumn=
+    b:word_indent_set_ = 0
+  endif
+enddef
+
+export def ToggleWordStops2()
+  if get(b:, 'word_indent_set_') == 1
+    WordIndent#UnsetWordStops()
+  else
+    b:word_indent_set_ = 1
+    SetWordStops('.', -1)
+  endif
+enddef
+export def ToggleWordStops()
+  const stops = GetStops()
+  if stops == []
+    WordIndent#SetWordStops('.', -1)
+  else 
+    SetCcs([])
+  endif
+enddef
 defcompile
