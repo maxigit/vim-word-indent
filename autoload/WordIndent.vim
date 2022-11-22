@@ -151,7 +151,7 @@ export def SetVstsFromCc()
   &varsofttabstop = &colorcolumn->StrToNrs()->ColsToTabStops()->join(',')
 enddef
 
-def StrToNrs(str: string): list<number>
+export def StrToNrs(str: string): list<number>
   return str->split(',')->map((key, val) => str2nr(val))
 enddef
 
@@ -349,5 +349,24 @@ export def ToggleWordStops()
   else 
     SetCcs([])
   endif
+enddef
+
+
+export def InstallAuto(install: bool=true)
+  augroup word_indent
+  au!
+  if  install
+    autocmd InsertEnter  * call WordIndent#SetWordStopsIf()
+    autocmd InsertLeave  * call WordIndent#UnsetWordStops()
+  else
+  endif
+  augroup END            
+enddef
+
+export def ToggleAuto()
+  const new = !get(g:, 'word_indent_auto_stops', 1)
+  g:word_indent_auto_stops = new
+  InstallAuto(new)
+  echo "word indent auto" (new ? 'on' : 'off')
 enddef
 defcompile

@@ -12,21 +12,15 @@ inoremap <C-T> <C-O>:call WordIndent#SetShiftWidth('right', 1)<Cr>
                \<C-\><C-O>:call WordIndent#RestoreShiftWidth()<Cr>
 noremap <expr> < WordIndent#ShiftLeft()
 noremap <expr> > WordIndent#ShiftRight()
-" map >> >>
-" map << <<
 
 execute "nnoremap <silent> ".leader."c :<C-U>call WordIndent#SetCcFromVsts()<CR>"
 execute "nnoremap <silent> ".leader."v :<C-U>call WordIndent#SetVstsFromCc()<CR>"
 execute "nnoremap <silent> ".leader."a :<C-U>call WordIndent#AddCc()<CR>"
 execute "nnoremap <silent> ".leader."s :<C-U>call WordIndent#SetCc()<CR>"
 execute "nnoremap <silent> ".leader."i :<C-U>call WordIndent#ToggleIndent()<CR>"
+execute "nnoremap <silent> ".leader."I :<C-U>call WordIndent#ToggleAuto()<CR>"
 
 set indentexpr=WordIndent#ToggleIndent()
 
-if  get(g:, 'word_indent_auto_stops', get(b:, 'word_indent_auto_stops', 1))
- augroup word_indent
- autocmd InsertEnter  * call WordIndent#SetWordStopsIf()
- autocmd InsertLeave  * call WordIndent#UnsetWordStops()
- augroup END            
-endif
+call WordIndent#InstallAuto(1)
 
