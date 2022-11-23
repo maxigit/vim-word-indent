@@ -3,13 +3,14 @@ execute "nnoremap <silent> ".leader."w :<C-U>call WordIndent#SetWordStops('.', -
 execute "nnoremap <silent> ".leader."k :<C-U>call WordIndent#SetWordStops('.', -v:count1)<CR>"
 execute "nnoremap <silent> ".leader."j :<C-U>call WordIndent#SetWordStops('.', +v:count1)<CR>"
 execute "nnoremap <silent> ".leader."W :<C-U>set varsofttabstop= colorcolumn=<CR>"
+execute "nnoremap <silent> ".leader."s :<C-U>call WordIndent#SetRegexStops('.', -v:count)<CR>"
 noremap <expr> < WordIndent#ShiftLeft()
 noremap <expr> > WordIndent#ShiftRight()
 
 execute "nnoremap <silent> ".leader."c :<C-U>call WordIndent#SetCcFromVsts()<CR>"
 execute "nnoremap <silent> ".leader."v :<C-U>call WordIndent#SetVstsFromCc()<CR>"
 execute "nnoremap <silent> ".leader."a :<C-U>call WordIndent#AddCc()<CR>"
-execute "nnoremap <silent> ".leader."s :<C-U>call WordIndent#SetCc()<CR>"
+execute "nnoremap <silent> ".leader."A :<C-U>call WordIndent#SetCc()<CR>"
 execute "nnoremap <silent> ".leader."i :<C-U>call WordIndent#ToggleIndent()<CR>"
 execute "nnoremap <silent> ".leader."I :<C-U>call WordIndent#ToggleAuto()<CR>"
 execute "nnoremap <silent> ".leader."C :<C-U>let g:word_indent_auto_cc=1-get(g:, 'word_indent_auto_cc', 1)<Cr>"
