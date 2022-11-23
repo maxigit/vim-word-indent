@@ -105,14 +105,14 @@ enddef
 
 export def SetWordStops(lnum: string, offset: number = 0): any
   const stops: list<number> = FindTabStopsR(lnum, offset)
-  SetCcs(stops)
+  SetCcs(stops, Line(lnum, offset))
   return stops
 enddef
 
 export def SetRegexStops(lnum: string, offset: number = 0): any
   const line = getline(Line(lnum, offset))
   const stops: list<number> = FindStopsByRegex(input('XX/'), line)
-  SetCcs(stops)
+  SetCcs(stops, Line(lnum, offset))
   return stops
 enddef
 
@@ -185,12 +185,19 @@ export def SetCc()
   SetCcs([col])
 enddef
 
-def SetCcs(cols: list<number>)
+def SetCcs(cols: list<number>, line: number=0)
   if get(g:, 'word_indent_auto_cc', 1) != 0
     &colorcolumn = cols->copy()->sort('N')->join(',')
   endif
   if get(g:, 'word_indent_auto_vsts', 1) != 0
     &varsofttabstop = cols->ColsToTabStops()->join(',')
+  endif
+  b:word_indent_ref_line = line
+  if get(b:, 'word_indent_match_id', 0)  > 0
+     matchdelete(b:word_indent_match_id)
+  endif
+  if line != 0
+        b:word_indent_match_id  = matchaddpos('Underlined', [line])
   endif
 enddef
 
