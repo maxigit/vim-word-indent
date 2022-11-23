@@ -7,6 +7,9 @@ inoremap <expr> <S-Tab> WordIndent#ToggleWordStops() ?? "<Tab>"
 inoremap <expr> <C-G><C-G> WordIndent#ToggleWordStops() ?? ""
 inoremap <expr> <C-D> WordIndent#SetShiftWidth('left', 1) ??  "<C-F>"
 inoremap <expr> <C-T> WordIndent#SetShiftWidth('right', 1) ?? "<C-F>"
+inoremap <C-G>0 0<C-D>
+inoremap <C-G><Tab> 0<C-D><Tab>
+imap <C-G><S-Tab> <C-G>0<C-g><C-g><C-T><C-g><C-g>
 noremap <expr> < WordIndent#ShiftLeft()
 noremap <expr> > WordIndent#ShiftRight()
 
