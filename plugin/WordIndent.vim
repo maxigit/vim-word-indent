@@ -36,3 +36,6 @@ set rulerformat=#%{undotree().seq_cur}
 augroup word_indent_shift
   autocmd InsertLeave * call WordIndent#RestoreShiftWidth()
 augroup END
+
+set scl=yes
+let g:word_indent_auto_cc=0

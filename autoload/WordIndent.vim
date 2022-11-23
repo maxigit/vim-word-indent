@@ -111,7 +111,8 @@ enddef
 
 export def SetRegexStops(lnum: string, offset: number = 0): any
   const line = getline(Line(lnum, offset))
-  const stops: list<number> = FindStopsByRegex(input('XX/'), line)
+  const stops: list<number> = FindStopsByRegex(input('stops/'), line)
+  g:word_indent_auto_cc = 1
   SetCcs(stops, Line(lnum, offset))
   return stops
 enddef

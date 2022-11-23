@@ -1,10 +1,13 @@
  [X] indent get previous line indent to next stop
- [ ] S-Tab go backward (like C-D ???)
- [ ] BUG: autcomd misses last word
+ [x] S-Tab go backward (like C-D ???)
+ [x] BUG: autcomd misses last word
  [ ] ww -> not recursive
  [ ] wW -> recursive
  [ ] wc-> to clear 
  [x] set shiftwidth according to cursor positions and stops
- [ ] repeat >> and >) (use operators ?)
- [ ] variables for behaviors
+ [x] repeat >> and >) (use operators ?)
+ [] variables for behaviors
  - [ ] displays or not cc when auto
+ [ ] use operator for .. j and k 
+ [ ] toggle -> function to set and set cc when toggling
+ [ ] toggel for signs ^^^^^^^^^^^^^
