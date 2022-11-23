@@ -398,4 +398,14 @@ export def ToggleAuto()
 enddef
 defcompile
 
+export def SetPreviousLine(offset= -1)
+  const ref = get(b:, 'word_indent_ref_line', 0)
+  if ref == 0
+        return
+  endif
+
+  SetWordStops('', ref + offset)
+enddef
+
+
 

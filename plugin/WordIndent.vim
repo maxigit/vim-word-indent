@@ -24,6 +24,8 @@ inoremap <expr> <C-T> WordIndent#SetShiftWidth('right', 1) ?? "<C-F>"
 inoremap <C-G>0 0<C-D>
 inoremap <C-G><Tab> 0<C-D><Tab>
 imap <C-G><S-Tab> <C-G>0<C-g><C-g><C-T><C-g><C-g>
+imap <expr> <C-G>k WordIndent#SetPreviousLine() ?? ""
+imap <expr> <C-G>j WordIndent#SetPreviousLine(1) ?? ""
 
 set indentexpr=WordIndent#ToggleIndent()
 
