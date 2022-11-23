@@ -194,10 +194,12 @@ def SetCcs(cols: list<number>, line: number=0)
   endif
   b:word_indent_ref_line = line
   if get(b:, 'word_indent_match_id', 0)  > 0
-     matchdelete(b:word_indent_match_id)
+     # matchdelete(b:word_indent_match_id)
   endif
+  sign_unplace('word_indent')
   if line != 0
-        b:word_indent_match_id  = matchaddpos('Underlined', [line])
+        # b:word_indent_match_id  =  matchaddpos('Todo', [line])
+        sign_place(0, 'word_indent', 'word_indent_ref', '%', {lnum: line})
   endif
 enddef
 
@@ -356,7 +358,7 @@ enddef
 
 export def UnsetWordStops()
   if get(b:, 'word_indent_set_') == 1
-    set varsofttabstop= colorcolumn=
+     SetCcs([])
     b:word_indent_set_ = 0
   endif
 enddef
@@ -408,4 +410,4 @@ export def SetPreviousLine(offset= -1)
 enddef
 
 
-
+sign define word_indent_ref text=¶ texthl=Special
