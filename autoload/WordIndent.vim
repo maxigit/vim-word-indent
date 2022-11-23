@@ -58,6 +58,20 @@ def Line(lnum: string, offset: number): number
   return line(lnum) + offset
 enddef
 
+export def FindStopsByRegex(reg: string, line: string): list<number>
+  var stops = []
+  var pos = 0
+  while  pos >= 0
+      const [_,start,end] = matchstrpos(line, reg, pos)
+      if start == -1
+         break
+      else
+        stops->add(start + 1)
+        pos = end + 1
+      endif
+  endwhile
+  return stops
+enddef
 # Find words from given line (and recursively
 # line above if a line is indented
 # Ex
@@ -91,6 +105,13 @@ enddef
 
 export def SetWordStops(lnum: string, offset: number = 0): any
   const stops: list<number> = FindTabStopsR(lnum, offset)
+  SetCcs(stops)
+  return stops
+enddef
+
+export def SetRegexStops(lnum: string, offset: number = 0): any
+  const line = getline(Line(lnum, offset))
+  const stops: list<number> = FindStopsByRegex(input('XX/'), line)
   SetCcs(stops)
   return stops
 enddef
@@ -369,3 +390,5 @@ export def ToggleAuto()
   echo "word indent auto" (new ? 'on' : 'off')
 enddef
 defcompile
+
+
