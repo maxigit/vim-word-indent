@@ -51,9 +51,16 @@ export def FindWordStops(str: string): list<number>
   return stops
 enddef
 
-def Line(lnum: string, offset: number): number
+def Line(lnum0: string, offset: number): number
+  var lnum = lnum0
   if lnum == ''
     return offset
+  endif
+  if lnum == 'ref' 
+     if has_key(b:, 'word_indent_ref_line')
+      return b:word_indent_ref_line + offset
+     endif
+     lnum = '.'
   endif
   return line(lnum) + offset
 enddef

@@ -1,7 +1,7 @@
 let leader = get(g:, 'word_indent_leader', '<leader>w')
-execute "nnoremap <silent> ".leader."w :<C-U>call WordIndent#SetWordStops('.', -v:count)<CR>"
-execute "nnoremap <silent> ".leader."k :<C-U>call WordIndent#SetWordStops('.', -v:count1)<CR>"
-execute "nnoremap <silent> ".leader."j :<C-U>call WordIndent#SetWordStops('.', +v:count1)<CR>"
+execute "nnoremap <silent> ".leader."w :<C-U>call WordIndent#SetWordStops('ref', -v:count)<CR>"
+execute "nnoremap <silent> ".leader."k :<C-U>call WordIndent#SetWordStops('ref', -v:count1)<CR>"
+execute "nnoremap <silent> ".leader."j :<C-U>call WordIndent#SetWordStops('ref', +v:count1)<CR>"
 execute "nnoremap <silent> ".leader."W :<C-U>set varsofttabstop= colorcolumn=<CR>"
 execute "nnoremap <silent> ".leader."s :<C-U>call WordIndent#SetRegexStops('.', -v:count)<CR>"
 noremap <expr> < WordIndent#ShiftLeft()
