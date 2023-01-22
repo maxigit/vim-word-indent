@@ -3,11 +3,10 @@
  [x] BUG: autcomd misses last word
  [ ] ww -> not recursive
  [ ] wW -> recursive
- [ ] wc-> to clear 
  [x] set shiftwidth according to cursor positions and stops
  [x] repeat >> and >) (use operators ?)
  [] variables for behaviors
  - [ ] displays or not cc when auto
- [ ] use operator for .. j and k 
+ [x] use operator for .. j and k 
  [ ] toggle -> function to set and set cc when toggling
  [ ] toggel for signs ^^^^^^^^^^^^^

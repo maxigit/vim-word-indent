@@ -111,9 +111,20 @@ export def FindTabStopsR(lnum: string, offset: number): list<number>
 enddef
 
 export def SetWordStops(lnum: string, offset: number = 0): any
+  if (lnum == '.' && offset == 0)
+    const ref = get(b:, 'word_indent_ref_line', 0)
+    if (ref == line(lnum))
+      ClearCcs()
+      return []
+    endif
+  endif
   const stops: list<number> = FindTabStopsR(lnum, offset)
   SetCcs(stops, Line(lnum, offset))
   return stops
+enddef
+
+export def ClearCcs()
+  SetCcs([])
 enddef
 
 export def SetRegexStops(lnum: string, offset: number = 0): any
@@ -366,7 +377,7 @@ enddef
 
 export def UnsetWordStops()
   if get(b:, 'word_indent_set_') == 1
-     SetCcs([])
+     ClearCcs()
     b:word_indent_set_ = 0
   endif
 enddef
