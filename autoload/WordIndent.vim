@@ -350,10 +350,12 @@ export def ShiftLeft(type=''): string
     &operatorfunc = ShiftLeft
     return "g@"
   endif
+  SetWordStopsIfAuto(-1)
   normal! '[
   SetShiftWidth('left', v:false)
   normal! =']
   RestoreShiftWidth()
+  UnsetWordStops()
   return ""
 enddef
 export def ShiftRight(type=''): string
@@ -362,12 +364,21 @@ export def ShiftRight(type=''): string
     return "g@"
   endif
   normal! '[
+  SetWordStopsIfAuto(-1)
   SetShiftWidth('right', v:false)
   normal! =']
   RestoreShiftWidth()
+  UnsetWordStops()
   return ""
 enddef
 
+export def SetWordStopsIfAuto(offset=0)
+  if get(g:, 'word_indent_auto_stops', 1) == 1
+    SetWordStopsIf(offset)
+  endif
+enddef
+
+# Set word stops unless it is alreayd been set
 export def SetWordStopsIf(offset=0)
 	if &varsofttabstop == ''
       b:word_indent_set_ = 1
@@ -378,7 +389,7 @@ enddef
 export def UnsetWordStops()
   if get(b:, 'word_indent_set_') == 1
      ClearCcs()
-    b:word_indent_set_ = 0
+     b:word_indent_set_ = 0
   endif
 enddef
 
@@ -403,6 +414,7 @@ enddef
 export def InstallAuto(install: bool=true)
   augroup word_indent
   au!
+  b:word_indent_auto = install
   if  install
     autocmd InsertEnter  * call WordIndent#SetWordStopsIf(-1)
     autocmd InsertLeave  * call WordIndent#UnsetWordStops()
