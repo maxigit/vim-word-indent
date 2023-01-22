@@ -31,8 +31,6 @@ set indentexpr=WordIndent#ToggleIndent()
 
 call WordIndent#InstallAuto(1)
 
-set rulerformat=#%{undotree().seq_cur}
-
 augroup word_indent_shift
   autocmd InsertLeave * call WordIndent#RestoreShiftWidth()
 augroup END
