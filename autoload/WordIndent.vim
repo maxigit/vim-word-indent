@@ -432,11 +432,16 @@ enddef
 defcompile
 
 export def SetPreviousLine(offset= -1)
-  const ref = get(b:, 'word_indent_ref_line', 0)
+  var ref = get(b:, 'word_indent_ref_line', 0)
   if ref == 0
         return
   endif
 
+  # skip current line in edit mode
+  const current = line('.')
+  if ref + offset == current
+    ref = current
+  endif
   SetWordStops('', ref + offset)
 enddef
 
