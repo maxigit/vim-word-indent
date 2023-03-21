@@ -1,0 +1,20 @@
+word-indent.txt                                                      my deccripe
+
+
+================================================================================
+CONTENTS                                                    *word-indent-contents*
+
+1. WORD-INDENT...........................................|word-indent-word-indent|
+2. Rationale...............................................|word-indent-rationale|
+
+word-indent.txt Indent using previous line words instead of tabstops
+
+================================================================================
+WORD-INDENT                                              *word-indent-word-indent*
+
+================================================================================
+RATIONALE                                                  *word-indent-rationale*
+
+This plugin allows quick manual code indentation by setting tabstops dynamically to the beginning
+of the words of the previous line(s).
+
