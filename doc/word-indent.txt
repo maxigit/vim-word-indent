@@ -1,20 +1,63 @@
-word-indent.txt                                                      my deccripe
+word-indent.txt                   Indent using previous line as word as tabstops
 
 
 ================================================================================
 CONTENTS                                                    *word-indent-contents*
 
 1. WORD-INDENT...........................................|word-indent-word-indent|
-2. Rationale...............................................|word-indent-rationale|
+2. OVERVIEW.................................................|word-indent-overview|
+3. DETAILS...................................................|word-indent-details|
+    3.1. PREVIOUS LINES...............................|word-indent-previous_lines|
+    3.2. SKIP PARENTHESIS...........................|word-indent-skip_parenthesis|
+4. MAPPING...................................................|word-indent-mapping|
+5. OPTIONS...................................................|word-indent-options|
 
-word-indent.txt Indent using previous line words instead of tabstops
+word-indent.txt Indent using previous line words instead of tab stops
 
 ================================================================================
 WORD-INDENT                                              *word-indent-word-indent*
 
 ================================================================================
-RATIONALE                                                  *word-indent-rationale*
+OVERVIEW                                                    *word-indent-overview*
 
-This plugin allows quick manual code indentation by setting tabstops dynamically to the beginning
-of the words of the previous line(s).
+This plugin allows quick manual code indentation by setting tab stops dynamically to the beginning
+of the words of the previous line(s). Because it  only set the tab stops (using |'vartabstops'|), all
+normal insert command such as `C-T`, `C-D`, and `<tab>` can be used to align words with the previous line.
+This plugin has been developed mainly to indent Haskell code but could also used to align tables.
+
+For example, we want to enter the following text :
+
+'''
+data Dimension = Dimension { dLength :: !Double
+                           , dWidth  :: !Double
+                           , dHeight :: !Double
+>
+                           } deriving (Show, Eq, Ord)
+<
+
+'''
+
+After having typed the first line the tab stops will be as follow :
+
+'''
+data Dimension = Dimension { dLength :: !Double
+     ^         ^ ^         ^ ^       ^  ^
+'''
+
+Pressing `<tab>` 4 times will move the cursor at the required position.
+
+================================================================================
+DETAILS                                                      *word-indent-details*
+
+--------------------------------------------------------------------------------
+PREVIOUS LINES                                        *word-indent-previous_lines*
+
+--------------------------------------------------------------------------------
+SKIP PARENTHESIS                                    *word-indent-skip_parenthesis*
+
+================================================================================
+MAPPING                                                      *word-indent-mapping*
+
+================================================================================
+OPTIONS                                                      *word-indent-options*
 
