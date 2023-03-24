@@ -10,7 +10,7 @@ This plugin has been developed mainly to indent Haskell code but could
 also used to align tables or anything where text needs to be aligned with
 the previous line.
 
-   ![example](word-indent-cc.gif)
+![example](word-indent-cc.gif)
 
 For example, we want to enter the following text :
 
@@ -59,7 +59,7 @@ as expected.
 ## SHIFTING
 Shifts (`<` and `>`) should also works as expected (with repeat)
 
-    ![shift example](word-indent-shift-2.gif)
+![shift example](word-indent-shift-2.gif)
 
 ## DISABLING TEMPORARILY
 
