@@ -75,13 +75,14 @@ Visible stops shows the position of the tab stops. It can be toggled by pressing
 ## MANUAL STOPS
 In addition to the automatic mode, stops can be set manually. A stop can be set either on the current position using `<leader>ww` or using a regexp by  pressing `<leader>ws`; a stop will be inserted at the beginning of all matches.
 Once a manual stop as be set, the automatic mode is disabled until all stops are cleared.
+
 ## SIGNS
 The |sign| `¶` is displayed to show which line is used as reference.
 `'signcolumn'` is set to yes because setting it to auto results in the sign column appearing/disappearing and the main buffer being shifted every time insert mode is entered/leaved.
 To hid the sign column use `set scl=no`.
 
 
-# NORMAR
+# MAPPING
 ## NORMAL MAPPING and LEADER
 By default all the normal mapping start with `<leader>w`. This can be set to something else by setting `g:word_indent_leader`. The list of the default mapping is
 
@@ -112,6 +113,12 @@ The equivalent can be achieved with `<C-G>0`. Apart from that, `<C-D>` and `<C-T
 - <C-G><S-Tab>   Delete all indent indent once
 
 # OPTIONS
+`g:word_indent_leader` set the leader for the normal mappings.
+
+`g:word_indent_pairs`  dictionary where the key is the opening character and the value the closing character.
+The default value is `{'(': ')', '[': ']', '{': '}', '''': '''', '"': '"'}`.
+
+`g:word_indent_auto_cc` if `1` show visible stops.
 
 
 
