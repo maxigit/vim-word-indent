@@ -82,9 +82,8 @@ as expected.
 SHIFTING                                                    *word-indent-shifting*
 
 Shifts (`<` and `>`) should also works as expected (with repeat)
->
-    ![shift example](word-indent-shift-2.gif)
-<
+
+
 
 --------------------------------------------------------------------------------
 DISABLING TEMPORARILY                          *word-indent-disabling_temporarily*
@@ -132,6 +131,9 @@ by  pressing `<leader>ws`; a stop will be inserted at the beginning of
 all matches.
 Once a manual stop as be set, the automatic mode is disabled until all
 stops are cleared.
+
+
+
 
 --------------------------------------------------------------------------------
 SIGNS                                                          *word-indent-signs*

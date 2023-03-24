@@ -97,6 +97,9 @@ all matches.
 Once a manual stop as be set, the automatic mode is disabled until all
 stops are cleared.
 
+![manual](word-indent-manual-2.gif)
+![table](word-indent-table.gif)
+
 ## SIGNS
 The |sign| `¶` is displayed to show which line is used as reference.
 `'signcolumn'` is set to yes because setting it to auto results in the sign
