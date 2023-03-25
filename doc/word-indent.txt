@@ -26,7 +26,7 @@ This script allows to indent and align text with the beginning of the
 words of the previous (lines) using standard tab and indent commands.
 It does so by setting tab stops dynamically to the beginning of the
 words of the previous line(s). Because it  only set the tab stops (using
-|'vartabstops'|), all
+|'varsofttabstop'|), all
 normal insert command such as `<C-T>`, `<C-D>`, and `<Tab>` can be used
 to align words with the previous line.
 This plugin has been developed mainly to indent Haskell code but could
@@ -55,7 +55,7 @@ Pressing `<tab>` 4 times will move the cursor at the required position.
 ================================================================================
 DETAILS                                                      *word-indent-details*
 
-This plugins works by setting |'vartabstops'| and |'colorcolumn'| dynamically
+This plugins works by setting |'varsofttabstop'| and |'colorcolumn'| dynamically
 when entering insert mode or starting a newline.
 By default tab stops are set to match the beginning of the words of the
 previous line but also the words of the lines above if they are before
